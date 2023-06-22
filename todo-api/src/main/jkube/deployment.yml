@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"todo-api:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"quarkus\")].image"}]'
+  name: todo-api
+spec:
+  template:
+    spec: 
+      containers:
+      - name: quarkus
+        envFrom:
+        - configMapRef:
+            name: db-config
